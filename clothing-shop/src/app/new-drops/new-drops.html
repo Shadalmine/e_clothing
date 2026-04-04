@@ -1,0 +1,24 @@
+<section class="py-16 px-8 bg-white">
+
+  <h2 class="text-4xl font-black text-center mb-12">New Drops</h2>
+
+  <div class="grid grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+    @for (product of products; track product.id) {
+      <div #productCard class="animate-on-scroll flex flex-col items-center group cursor-pointer">
+
+        <div class="overflow-hidden w-full h-80 bg-white">
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+            class="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105">
+        </div>
+
+        <h3 class="mt-4 font-bold text-lg">{{ product.name }}</h3>
+        <p class="text-gray-500">{{ product.price }}</p>
+      </div>
+    }
+
+  </div>
+
+</section>

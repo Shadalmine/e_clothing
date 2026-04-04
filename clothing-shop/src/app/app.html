@@ -1,3 +1,16 @@
 <app-navbar></app-navbar>
 <app-home></app-home>
+<app-new-drops></app-new-drops>
+<app-promo-banner></app-promo-banner>
+
+<!-- Marquee Banner -->
+<div class="bg-white border-b border-gray-200 overflow-hidden py-2">
+  <div class="flex animate-marquee whitespace-nowrap">
+    @for (item of marqueeItems; track item) {
+      <span class="text-sm font-medium mx-12">Get 10% Off Your First Order</span>
+    }
+  </div>
+</div>
+
+<app-footer class="block bg-red-500"></app-footer>
 <router-outlet></router-outlet>
