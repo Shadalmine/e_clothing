@@ -1,0 +1,33 @@
+<nav class="bg-black px-6 py-3 flex items-center justify-between relative">
+
+  <!-- LEFT -->
+  <div class="flex gap-6 text-white font-medium">
+    @for (link of navLinks; track link.value) {
+      <a class="cursor-pointer hover:underline"
+         (click)="setCategory(link.value)"
+         [class.font-bold]="activeCategory() === link.value">
+        {{ link.label }}
+      </a>
+    }
+  </div>
+
+  <!-- CENTER LOGO -->
+  <div class="absolute left-1/2 transform -translate-x-1/2">
+    <img src="logo.png" class="h-10" alt="logo">
+  </div>
+
+  <!-- RIGHT -->
+  <div class="flex items-center gap-6">
+    <div class="flex items-center gap-2 cursor-pointer">
+      <span class="text-xl">👤</span>
+      <span class="font-medium text-white">Log In</span>
+    </div>
+    <div class="relative cursor-pointer text-xl">
+      🛒
+      <span class="absolute -top-2 -right-3 bg-black text-white text-xs px-2 py-[1px] rounded-full">
+        {{ cartCount() }}
+      </span>
+    </div>
+  </div>
+
+</nav>
