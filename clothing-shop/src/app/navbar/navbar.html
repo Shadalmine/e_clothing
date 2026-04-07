@@ -1,11 +1,11 @@
-<nav class="fixed top-0 left-0 right-0 z-50 bg-black-400 px-6 py-3 flex items-center justify-between transition-transform duration-300"
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between transition-transform duration-300"
      [class.translate-y-0]="isVisible()"
      [class.-translate-y-full]="!isVisible()">
 
   <!-- LEFT -->
-  <div class="flex gap-6 text-black font-medium">
+  <div class="hidden md:flex gap-6 text-black font-medium">
     @for (link of navLinks; track link.value) {
-      <a class="cursor-pointer hover:underline"
+      <a class="cursor-pointer hover:underline text-sm"
          (click)="setCategory(link.value)"
          [class.font-bold]="activeCategory() === link.value">
         {{ link.label }}
@@ -13,27 +13,135 @@
     }
   </div>
 
+  <!-- HAMBURGER -->
+  <button class="md:hidden flex flex-col justify-center gap-1.5 cursor-pointer z-50"
+          (click)="toggleMenu()">
+    <span class="block w-5 h-0.5 bg-black transition-all duration-300"
+          [class.rotate-45]="menuOpen()"
+          [class.translate-y-2]="menuOpen()"></span>
+    <span class="block w-5 h-0.5 bg-black transition-all duration-300"
+          [class.opacity-0]="menuOpen()"></span>
+    <span class="block w-5 h-0.5 bg-black transition-all duration-300"
+          [class.-rotate-45]="menuOpen()"
+          [class.-translate-y-2]="menuOpen()"></span>
+  </button>
+
   <!-- CENTER LOGO -->
-<div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center leading-tight">
-  <span class="text-xl font-black lowercase tracking-wide">kamisita</span>
-  <span class="text-[10px] font-light lowercase tracking-widest">everyday essentials</span>
-</div>
+  <div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center leading-tight">
+    <span class="text-xl font-black lowercase tracking-wide">kamisita</span>
+    <span class="text-[10px] font-light lowercase tracking-widest text-gray-400">everyday essentials</span>
+  </div>
+
   <!-- RIGHT -->
-  <div class="flex items-center gap-6">
-    <div class="flex items-center gap-2 cursor-pointer">
+  <div class="flex items-center gap-4">
+    <div class="hidden md:flex items-center gap-2 cursor-pointer"
+         (click)="goToLogin()">
       <span class="text-xl">👤</span>
-      <span class="font-medium">Log In</span>
+      <span class="font-medium text-sm">Log In</span>
     </div>
-    <div class="relative cursor-pointer text-xl">
+    <div class="relative cursor-pointer text-xl" (click)="toggleCart()">
       🛒
       <span class="absolute -top-2 -right-3 bg-black text-white text-xs px-2 py-[1px] rounded-full">
-        {{ cartCount() }}
+        {{ cartService.cartCount() }}
       </span>
     </div>
   </div>
 
 </nav>
 
-<!-- Spacer so content doesn't hide under fixed navbar -->
-<div class="h-16"></div>
+<!-- Mobile Drawer -->
+@if (menuOpen()) {
+  <div class="fixed top-[52px] left-0 right-0 z-40 bg-white border-t border-gray-200 flex flex-col px-6 py-4 gap-4 md:hidden shadow-md">
+    @for (link of navLinks; track link.value) {
+      <a class="text-black font-medium text-base cursor-pointer border-b border-gray-100 pb-3 hover:font-bold transition-all"
+         (click)="setCategory(link.value)"
+         [class.font-bold]="activeCategory() === link.value">
+        {{ link.label }}
+      </a>
+    }
+    <div class="flex items-center gap-2 cursor-pointer pt-1"
+         (click)="goToLogin()">
+      <span class="text-xl">👤</span>
+      <span class="font-medium text-sm">Log In</span>
+    </div>
+  </div>
+}
 
+<!-- Cart Sidebar Overlay -->
+@if (cartOpen()) {
+  <div class="fixed inset-0 z-50 flex justify-end">
+
+    <div class="flex-1 bg-black/30" (click)="toggleCart()"></div>
+
+    <div class="w-full max-w-sm bg-white h-full flex flex-col shadow-2xl">
+
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <h2 class="font-bold text-lg">Cart <span class="text-gray-400 font-normal text-sm">({{ cartService.cartCount() }} items)</span></h2>
+        <button (click)="toggleCart()" class="text-gray-400 hover:text-black text-2xl cursor-pointer">×</button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-4">
+        @if (cartService.items().length === 0) {
+          <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
+            <span class="text-5xl">🛒</span>
+            <p class="text-sm">Your cart is empty</p>
+          </div>
+        }
+        @for (item of cartService.items(); track item.id) {
+          <div class="flex gap-4 border-b border-gray-100 pb-4">
+            <img [src]="item.image" [alt]="item.name"
+                 class="w-16 h-16 object-contain border border-gray-100 rounded">
+            <div class="flex-1">
+              <div class="flex justify-between items-start">
+                <h3 class="font-semibold text-sm">{{ item.name }}</h3>
+                <button (click)="cartService.removeItem(item.id)"
+                        class="text-gray-400 hover:text-red-500 cursor-pointer text-lg">🗑</button>
+              </div>
+              <p class="text-sm text-gray-500">{{ item.price }}</p>
+              <div class="flex items-center justify-between mt-2">
+                <div class="flex items-center border border-gray-200">
+                  <button (click)="cartService.decrement(item.id)"
+                          class="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm">−</button>
+                  <span class="px-3 py-1 border-x border-gray-200 text-sm">{{ item.quantity }}</span>
+                  <button (click)="cartService.increment(item.id)"
+                          class="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm">+</button>
+                </div>
+                <span class="text-sm font-semibold">₱{{ (item.priceNum * item.quantity).toLocaleString() }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      @if (cartService.items().length > 0) {
+        <div class="px-6 py-4 border-t border-gray-200 flex flex-col gap-3">
+          <div class="flex items-center gap-2 text-green-600 cursor-pointer text-sm">
+            <span>🏷</span>
+            <span>Enter a promo code</span>
+          </div>
+          <div class="border-t border-gray-100 pt-3">
+            <div class="flex justify-between font-bold text-base mb-1">
+              <span>Estimated total</span>
+              <span>₱{{ cartService.total().toLocaleString() }}</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-4">Taxes and shipping are calculated at checkout.</p>
+            <button
+              (click)="goToCheckout()"
+              class="w-full bg-green-600 text-white py-3 font-semibold rounded hover:bg-green-700 transition cursor-pointer mb-2">
+              Checkout
+            </button>
+            <button (click)="toggleCart()"
+                    class="w-full border border-green-600 text-green-600 py-3 font-semibold rounded hover:bg-green-50 transition cursor-pointer">
+              View Cart
+            </button>
+            <p class="text-center text-xs text-gray-400 mt-3">🔒 Secure Checkout</p>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+}
+
+<!-- Spacer -->
+<div class="h-14"></div>

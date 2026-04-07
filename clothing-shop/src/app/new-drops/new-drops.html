@@ -1,11 +1,13 @@
-<section class="py-16 px-8 bg-white">
+<section class="py-16 px-4 md:px-8 bg-white">
 
-  <h2 class="text-4xl font-black text-center mb-12">New Drops</h2>
+  <h2 class="text-3xl md:text-4xl font-black text-center mb-12">New Drops</h2>
 
-  <div class="grid grid-cols-3 gap-8 max-w-6xl mx-auto">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
     @for (product of products; track product.id) {
-      <div #productCard class="animate-on-scroll flex flex-col items-center group cursor-pointer">
+      <div #productCard
+           class="animate-on-scroll flex flex-col items-center group cursor-pointer"
+           (click)="goToProduct(product.id)">
 
         <div class="overflow-hidden w-full h-80 bg-white">
           <img

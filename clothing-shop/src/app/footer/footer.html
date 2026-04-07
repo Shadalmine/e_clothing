@@ -1,54 +1,39 @@
-<footer class="bg-black text-white px-16 py-16">
+<footer class="bg-black text-white px-8 md:px-16 py-16">
 
-  <!-- Top Grid -->
-  <div class="grid grid-cols-3 gap-8 mb-16">
-
-    <!-- LEFT: Contact -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
     <div class="flex flex-col gap-4">
-      <p class="leading-relaxed">
-        500 Terry Francine St.<br>
-        San Francisco, CA 94158
+      <p class="leading-relaxed text-sm">
+        Purok Nangka Bangcas-B<br>Hinunangan, Souhern Leyte<br>Philippines 6608
       </p>
-      <p class="leading-relaxed">
-        123-456-7890<br>
-        info&#64;kamisita.com
+      <p class="leading-relaxed text-sm">
+        0938-275-4580<br>dashchar924&#64;gmail.com
       </p>
     </div>
-
-    <!-- CENTER: Our Store -->
     <div class="flex flex-col gap-2">
       <p class="font-semibold mb-2">Our Store</p>
-      <a href="#" class="hover:underline cursor-pointer">About Us</a>
-      <a href="#" class="hover:underline cursor-pointer">Subscribe</a>
-      <a href="#" class="hover:underline cursor-pointer">FAQ</a>
+     <a (click)="goToAbout()" class="hover:underline cursor-pointer text-sm">About Us</a>
+      <a href="#" class="hover:underline cursor-pointer text-sm">Subscribe</a>
+      <a href="#" class="hover:underline cursor-pointer text-sm">FAQ</a>
     </div>
-
-    <!-- RIGHT: Shop -->
     <div class="flex flex-col gap-2">
       <p class="font-semibold mb-2">Shop</p>
-      <a href="#" class="hover:underline cursor-pointer">All Products</a>
-      <a href="#" class="hover:underline cursor-pointer">Men</a>
-      <a href="#" class="hover:underline cursor-pointer">Women</a>
-      <a href="#" class="hover:underline cursor-pointer">New</a>
+      <a href="#" class="hover:underline cursor-pointer text-sm">All Products</a>
+      <a href="#" class="hover:underline cursor-pointer text-sm">Men</a>
+      <a href="#" class="hover:underline cursor-pointer text-sm">Women</a>
+      <a href="#" class="hover:underline cursor-pointer text-sm">New</a>
     </div>
-
   </div>
 
-  <!-- CENTER LOGO -->
   <div class="flex justify-center my-12">
     <div class="flex flex-col items-center leading-tight">
-      <span class="text-4xl font-black lowercase tracking-wide text-white">kamisita</span>
+      <span class="text-3xl md:text-4xl font-black lowercase tracking-wide text-white">kamisita</span>
       <span class="text-xs font-light lowercase tracking-widest text-white/60">everyday essentials</span>
     </div>
   </div>
 
-  <!-- Divider -->
   <div class="border-t border-white/20 my-8"></div>
 
-  <!-- Bottom Grid -->
-  <div class="grid grid-cols-3 gap-8">
-
-    <!-- LEFT: Policies -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
     <div class="flex flex-col gap-1 text-sm text-white/70">
       <a href="#" class="hover:text-white cursor-pointer">Refund Policy</a>
       <a href="#" class="hover:text-white cursor-pointer">Accessibility Statement</a>
@@ -56,20 +41,15 @@
       <a href="#" class="hover:text-white cursor-pointer">Shipping Policy</a>
       <a href="#" class="hover:text-white cursor-pointer">Privacy Policy</a>
     </div>
-
-    <!-- CENTER: Socials -->
     <div class="flex flex-col gap-1 text-sm text-white/70">
-      <a href="#" class="hover:text-white cursor-pointer">Facebook</a>
+      <a href="https://www.facebook.com/shaddy.almine/" class="hover:text-white cursor-pointer">Facebook</a>
       <a href="#" class="hover:text-white cursor-pointer">Tiktok</a>
       <a href="#" class="hover:text-white cursor-pointer">Instagram</a>
     </div>
-
-    <!-- RIGHT: Copyright -->
     <div class="text-sm text-white/70">
       <p>© 2025 by Kamisita.</p>
       <p>All rights reserved.</p>
     </div>
-
   </div>
 
 </footer>
